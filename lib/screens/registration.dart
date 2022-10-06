@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+//import 'package:flutter/src/widgets/container.dart';
+//import 'package:flutter/src/widgets/framework.dart';
 import 'package:instagram_clone_app/provides/appprovide.dart';
+import 'package:instagram_clone_app/screens/home.dart';
 import 'package:provider/provider.dart';
 
 class RegisTration extends StatefulWidget {
@@ -23,6 +24,9 @@ class _RegisTrationState extends State<RegisTration> {
       body: Center(
         child: MaterialButton(onPressed: (){
           appprovider.signInwithGoogle();
+
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHome()));
+
 
 
         },
