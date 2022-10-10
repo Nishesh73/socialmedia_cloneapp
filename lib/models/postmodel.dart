@@ -7,6 +7,7 @@ class PostModel{
   String? _url;
   String? _description;
   String? _type;
+  String? _username;
 
   get url{
 
@@ -22,7 +23,13 @@ class PostModel{
 
 
     return _type;
-  } 
+  }
+  get username{
+
+    return _username;
+
+
+  }
 
 
   PostModel.fromSnapshot(DocumentSnapshot documentSnapshot){
@@ -34,6 +41,7 @@ class PostModel{
     _url=documentSnapshot.get("imageurls");
     _description=documentSnapshot.get("description");
     _type=documentSnapshot.get("type");
+    _username=documentSnapshot.get("name");
 
                                         
 

@@ -22,7 +22,7 @@ class _RegisTrationState extends State<RegisTration> {
     return Scaffold(
 
       body: Center(
-        child: MaterialButton(onPressed: () async{
+        child: MaterialButton(onPressed: ()async {
           await appprovider.signInwithGoogle();
 
           Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHome()));

@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:instagram_clone_app/models/postmodel.dart';
@@ -65,7 +66,14 @@ class _PostWidgetState extends State<PostWidget> {
 
       child: Column(
         children: [
-          Text(approvider.user!),
+
+
+       
+            ListTile(
+              leading: Text(widget.postModel.username),
+              trailing: widget.postModel.username==approvider.user?null:Text("add friend"),
+
+            ),
 
 
          widget.postModel.type=="image"? Image.network(widget.postModel.url):
