@@ -34,7 +34,7 @@ class PostModel{
 
   PostModel.fromSnapshot(DocumentSnapshot documentSnapshot){
 
-    if(documentSnapshot.data() != null){
+    
 
     
     // doc.data()[""]method is deprcreate use doc.get("") instead
@@ -43,24 +43,8 @@ class PostModel{
     _type=documentSnapshot.get("type");
     _username=documentSnapshot.get("name");
 
-                                        
-
-    }
-
-    
-
-
-
-  }
-
-
-
-
-
-
-
-
-
-
-
+                                      
+                                      }
+                                      
+                                      
 }

@@ -58,7 +58,10 @@ class _MyFeedsState extends State<MyFeeds> {
 
        Reference reference=FirebaseStorage.instance.ref().child("postsfolder").child(uids.v4().toString());
 
+      if(pickimage!=null){
+
        UploadTask uploadimage=reference.putFile(pickimage!);
+
        uploadimage.whenComplete(() {
 
         reference.getDownloadURL().then((imageurl) {
@@ -66,7 +69,7 @@ class _MyFeedsState extends State<MyFeeds> {
 
           FirebaseFirestore.instance.collection("posts").doc().set({
             "imageurls":imageurl,
-            "type":"video is good",
+            "type":"video",
             "description":"video is marvelous",
             "name":approvider.user,
 
@@ -77,7 +80,7 @@ class _MyFeedsState extends State<MyFeeds> {
 
        } );
 
-       
+      }
 
     
 
@@ -102,8 +105,10 @@ class _MyFeedsState extends State<MyFeeds> {
  } );
 
        Reference reference=FirebaseStorage.instance.ref().child("postsfolder").child(uids.v4().toString());
+       if(pickimage!=null){
 
        UploadTask uploadimage=reference.putFile(pickimage!);
+       
        uploadimage.whenComplete(() {
 
         reference.getDownloadURL().then((imageurl) {
@@ -121,6 +126,9 @@ class _MyFeedsState extends State<MyFeeds> {
 
 
        } );
+       }
+
+
 
            
           }, icon: Icon(Icons.upload_file)),
@@ -134,7 +142,7 @@ class _MyFeedsState extends State<MyFeeds> {
 
         children: [
 
-          Text("first line of column"),
+          Text("hi"),
 
           Column(children: 
 

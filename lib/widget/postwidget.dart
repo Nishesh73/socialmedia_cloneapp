@@ -1,5 +1,6 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -21,6 +22,8 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
   VideoPlayerController? videoPlayerController;
 
+  List? temporaryfriendList=[];
+
   videoPlay(){
     if(widget.postModel.type=="video"){
 
@@ -34,6 +37,10 @@ class _PostWidgetState extends State<PostWidget> {
        
 
 
+    }
+    else{
+
+      return null;
     }
 
    
@@ -71,11 +78,35 @@ class _PostWidgetState extends State<PostWidget> {
        
             ListTile(
               leading: Text(widget.postModel.username),
-              trailing: widget.postModel.username==approvider.user?null:Text("add friend"),
+              trailing: widget.postModel.username==approvider.user?null:
+              
+              GestureDetector(
+                onTap: (){
+
+                  String? temporaryfriend=approvider.user;//google signin wala mah
+                  //widget.postModel.username==hamile friend request pathako manxe
+
+                  temporaryfriendList?.add(temporaryfriend);
+
+                  FirebaseFirestore.instance.collection("temporaryfriendlist").doc(widget.postModel.username).set({
+                   "friends":FieldValue.arrayUnion(temporaryfriendList!),
+
+
+                  });
+
+
+
+
+
+
+                },
+                
+                
+                child: Text("add friend")),
 
             ),
 
-
+          
          widget.postModel.type=="image"? Image.network(widget.postModel.url):
          
          Container(
