@@ -3,6 +3,7 @@
 //import 'dart:html';
 import 'dart:io';
 import 'package:instagram_clone_app/provides/appprovide.dart';
+import 'package:instagram_clone_app/screens/friendlistscreen.dart';
 import 'package:instagram_clone_app/widget/postwidget.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -40,6 +41,15 @@ class _MyFeedsState extends State<MyFeeds> {
         title: Text("feed"),
         backgroundColor: Colors.red,
         actions: [
+          IconButton(onPressed: (){
+
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+              return MyFriendList();
+
+
+            }) );
+
+          }, icon: Icon(Icons.message)),
           IconButton(onPressed: (){
            ImagePicker().pickVideo(source: ImageSource.gallery).then((imagetaken) {
 
