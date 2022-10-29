@@ -76,7 +76,7 @@ class _MyNotificationState extends State<MyNotification> {
                                   "Friends":FieldValue.arrayUnion([approvider.user]),
                                 },
                                 
-                                SetOptions(merge: true));
+                                SetOptions(merge: true),);
 
                                 FirebaseFirestore.instance.collection("temporaryfriendlist").doc(approvider.user).update({
 

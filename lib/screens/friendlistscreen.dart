@@ -48,7 +48,9 @@ class _MyFriendListState extends State<MyFriendList> {
                   return GestureDetector(
                     onTap: (){
 
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen()) );
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen(currentuser: approvider.user,
+                      
+                      peeruser: e,)) );
 
 
                     }
@@ -58,6 +60,7 @@ class _MyFriendListState extends State<MyFriendList> {
 
 
                 } ).toList(),
+
 
 
               );
