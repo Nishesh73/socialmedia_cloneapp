@@ -25,12 +25,7 @@ class AppProvider with ChangeNotifier{
   }
 
 
-  
-
    Future signInwithGoogle() async{
-
-    
-
 
     GoogleSignInAccount? googleSignInAccount=await GoogleSignIn().signIn();
     
@@ -50,32 +45,14 @@ class AppProvider with ChangeNotifier{
         "id":value.user!.uid,
         "name":value.user!.displayName,
         "email":value.user!.email
+        
+ },
 
-
-
-
-
-
-      });
-
-   
-
-   
-    
-
-
-    
-
-
-
-
-
+ SetOptions(merge: true),
+ 
+ );
 
     });
-
-
-
-
 
   }
 
@@ -84,10 +61,4 @@ class AppProvider with ChangeNotifier{
 
 
   }
-
-
-
-
-
-
 }

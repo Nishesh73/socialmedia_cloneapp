@@ -32,7 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     }else{
 
-      id=(widget.peeruser.hashCode+widget.currentuser.hashCode) as String?;
+      id=widget.peeruser!+"-"+widget.currentuser!;
     }
 
 
@@ -60,7 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
 
-            StreamBuilder(stream:FirebaseFirestore.instance.collection("chats").doc(id).collection("messages").snapshots(),
+            StreamBuilder(stream:FirebaseFirestore.instance.collection("chats").doc(id).collection("messages").orderBy("created at",descending: false).snapshots(),
             
             builder: (context,snapshotdata){
 
@@ -82,6 +82,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
                   return Card(
                     child: Container(
+
+                      alignment: appprovider.user==documentdata["send by"]?Alignment.bottomRight:Alignment.bottomLeft,
                   
                       height: 20,
                   
@@ -104,52 +106,55 @@ class _ChatScreenState extends State<ChatScreen> {
 
 
             }),
-            Form(
-              key: globalkey,
-              child: Row(children: [
-                  
-                Expanded(child: TextFormField(
+            Container(
+              margin: EdgeInsets.only(top: 200.0),
+              child: Form(
+                key: globalkey,
+                child: Row(children: [
+                    
+                  Expanded(child: TextFormField(
 
-                  onSaved: (value){
-                   message=value;
-
-
-                  },
-
-
-                  
+                    onSaved: (value){
+                     message=value;
 
 
-
-                )),
-                IconButton(onPressed: (){
-
-                  globalkey.currentState!.save();
+                    },
 
 
-                  FirebaseFirestore.instance.collection("chats").doc(id).set({
-                    "id":id,
-
-
-                  });
-
-                  FirebaseFirestore.instance.collection("chats").doc(id).collection("messages").doc().set({
-
-                    "mesage":message,
-                    "send by":appprovider.user,
-                    "created at":DateTime.now(),
+                    
 
 
 
-                  });
+                  )),
+                  IconButton(onPressed: (){
+
+                    globalkey.currentState!.save();
+
+
+                    FirebaseFirestore.instance.collection("chats").doc(id).set({
+                      "id":id,
+
+
+                    });
+
+                    FirebaseFirestore.instance.collection("chats").doc(id).collection("messages").doc().set({
+
+                      "mesage":message,
+                      "send by":appprovider.user,
+                      "created at":DateTime.now(),
 
 
 
-                }, icon:Icon(Icons.send)),
-                  
-                  
-                  
-              ],),
+                    });
+
+
+
+                  }, icon:Icon(Icons.send)),
+                    
+                    
+                    
+                ],),
+              ),
             ),
           ],
         ),

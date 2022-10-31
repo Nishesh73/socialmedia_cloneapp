@@ -3,6 +3,7 @@
 //import 'dart:html';
 import 'dart:io';
 import 'package:instagram_clone_app/provides/appprovide.dart';
+import 'package:instagram_clone_app/screens/detailscreen.dart';
 import 'package:instagram_clone_app/screens/friendlistscreen.dart';
 import 'package:instagram_clone_app/widget/postwidget.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,17 @@ class _MyFeedsState extends State<MyFeeds> {
         title: Text("feed"),
         backgroundColor: Colors.red,
         actions: [
+
+          IconButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+
+              return DetailScreen();
+
+
+            }));
+
+
+          }, icon: Icon(Icons.add)),
           IconButton(onPressed: (){
 
             Navigator.push(context, MaterialPageRoute(builder: (context){
@@ -50,98 +62,9 @@ class _MyFeedsState extends State<MyFeeds> {
             }) );
 
           }, icon: Icon(Icons.message)),
-          IconButton(onPressed: (){
-           ImagePicker().pickVideo(source: ImageSource.gallery).then((imagetaken) {
 
-      var tempfile=File(imagetaken!.path);
 
-      if(tempfile!=null){
-
-        setState(() {
-
-          pickimage=tempfile;
           
-        });
-
-       }
- } );
-
-       Reference reference=FirebaseStorage.instance.ref().child("postsfolder").child(uids.v4().toString());
-
-      if(pickimage!=null){
-
-       UploadTask uploadimage=reference.putFile(pickimage!);
-
-       uploadimage.whenComplete(() {
-
-        reference.getDownloadURL().then((imageurl) {
-
-
-          FirebaseFirestore.instance.collection("posts").doc().set({
-            "imageurls":imageurl,
-            "type":"video",
-            "description":"video is marvelous",
-            "name":approvider.user,
-
-
-          });
-        });
-
-
-       } );
-
-      }
-
-    
-
-
-
-
-          }, icon: Icon(Icons.video_call)),
-          IconButton(onPressed: (){
-             ImagePicker().pickImage(source: ImageSource.gallery).then((imagetaken) {
-
-      var tempfile=File(imagetaken!.path);
-
-      if(tempfile!=null){
-
-        setState(() {
-
-          pickimage=tempfile;
-          
-        });
-
-       }
- } );
-
-       Reference reference=FirebaseStorage.instance.ref().child("postsfolder").child(uids.v4().toString());
-       if(pickimage!=null){
-
-       UploadTask uploadimage=reference.putFile(pickimage!);
-       
-       uploadimage.whenComplete(() {
-
-        reference.getDownloadURL().then((imageurl) {
-
-
-          FirebaseFirestore.instance.collection("posts").doc().set({
-            "imageurls":imageurl,
-            "type":"image",
-            "description":"image is beautiful",
-            "name":approvider.user,
-
-
-          });
-        });
-
-
-       } );
-       }
-
-
-
-           
-          }, icon: Icon(Icons.upload_file)),
         ],
 
         
