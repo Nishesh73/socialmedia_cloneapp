@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +46,7 @@ class _MyNotificationState extends State<MyNotification> {
                       return ListTile(
                         leading:Text(listdata[index]+"\nsend fnd reqst") ,
                         
-
-                        
-                        trailing:Container(
+                      trailing:Container(
                           
                           width: 250,
                           child: Row(children: [
@@ -114,27 +110,10 @@ class _MyNotificationState extends State<MyNotification> {
                       
                     }),
                 );
-
-
-
-
-
-              }
-              
-              
-              ).toList(),
-
-
-              
-              
-              ),
-
-
-
-
-
-            );
-
+  }
+            ).toList(),
+            ),
+         );
 
           })
 

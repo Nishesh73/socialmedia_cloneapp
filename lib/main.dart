@@ -15,22 +15,10 @@ void main() async {
 
     MultiProvider(providers: [
       ChangeNotifierProvider.value(value: AppProvider()),
-
-
-    ],
+  ],
 
     child: MyApp(),
-    
-    
-    
-    ),
-
-    
-    
-    
-    
-   
-    
+   ),   
     );
 }
 
@@ -45,8 +33,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
-      home: RegisTration(),
+     home: RegisTration(),
     );
   }
 }

@@ -1,6 +1,3 @@
-
-
-//import 'dart:html';
 import 'dart:io';
 import 'package:instagram_clone_app/provides/appprovide.dart';
 import 'package:instagram_clone_app/screens/detailscreen.dart';
@@ -26,12 +23,6 @@ class MyFeeds extends StatefulWidget {
 class _MyFeedsState extends State<MyFeeds> {
   File? pickimage;
   var uids=Uuid();
-
- 
-
-
-  
-
   @override
   Widget build(BuildContext context) {
     final approvider=Provider.of<AppProvider>(context);
@@ -63,13 +54,9 @@ class _MyFeedsState extends State<MyFeeds> {
 
           }, icon: Icon(Icons.message)),
 
+     ],
 
-          
-        ],
-
-        
-
-      ),
+           ),
 
       body: SingleChildScrollView(child: Column(
 
@@ -81,15 +68,9 @@ class _MyFeedsState extends State<MyFeeds> {
 
             approvider.posts.map((results) => PostWidget(postModel: results)).toList(),
           
-
-
-          )
-
-
-        ],
-
-
-      )
+ )
+      ],
+    )
       ),
 
 

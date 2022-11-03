@@ -44,7 +44,8 @@ dependencies:
   image_picker: ^0.8.2
   video_player: ^2.2.0
   firebase_storage: ^10.3.10
-  uuid: ^3.0.5 
+  uuid: ^3.0.5
+  material_design_icons_flutter: ^5.0.6996 
   
 
 dev_dependencies:

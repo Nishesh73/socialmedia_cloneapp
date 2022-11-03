@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +5,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:instagram_clone_app/models/postmodel.dart';
 import 'package:instagram_clone_app/provides/appprovide.dart';
+import 'package:instagram_clone_app/screens/commentscreen.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player/video_player.dart';
@@ -35,22 +35,14 @@ class _PostWidgetState extends State<PostWidget> {
          
        });
        
-
-
-    }
+ }
     else{
 
       return null;
     }
 
    
-
-
-
-
-
-
-  }
+ }
 
   @override
   void initState() {
@@ -58,25 +50,14 @@ class _PostWidgetState extends State<PostWidget> {
     super.initState();
     videoPlay();
   }
-
-
-
-
-
- 
-
-  
-  @override
+ @override
   Widget build(BuildContext context) {
     final approvider=Provider.of<AppProvider>(context);
     return Container(
 
       child: Column(
         children: [
-
-
-       
-            ListTile(
+           ListTile(
               leading: Text(widget.postModel.username),
               trailing: widget.postModel.username==approvider.user?null:
               
@@ -90,42 +71,49 @@ class _PostWidgetState extends State<PostWidget> {
 
                   FirebaseFirestore.instance.collection("temporaryfriendlist").doc(widget.postModel.username).set({
                    "friends":FieldValue.arrayUnion(temporaryfriendList!),
+   });
 
-
-                  });
-
-
-
-
-
-
-                },
-                
-                
-                child: Text("add friend")),
+ },
+                     child: Text("add friend")),
 
             ),
+  widget.postModel.type=="image"? GestureDetector(
+    onDoubleTap: (() {
+      int like=widget.postModel.likes;
+      FirebaseFirestore.instance.collection("posts").doc(widget.postModel.description).update({
 
-          
-         widget.postModel.type=="image"? Image.network(widget.postModel.url):
+        "likes":like+=1,
+      });
+
+
+      
+    }),
+    
+    child: Image.network(widget.postModel.url)):
          
          Container(
           child: AspectRatio(aspectRatio: 16/7,
 
           child: VideoPlayer(videoPlayerController!),
+   ),
+     ),
 
-          
-          ),
+   Row(children: [
+    IconButton(onPressed: (){}, icon: Icon(MdiIcons.heart)),
+    IconButton(onPressed: (){
+
+      Navigator.push(context,MaterialPageRoute(builder: (context)=>MyComment(comments:widget.postModel.comments,descriptions: widget.postModel.description,)) );
 
 
-         ),
 
+    }, icon: Icon(MdiIcons.commentAlert)),
 
-        ],
+],),
+
+  ],
       ),
 
+ );
 
-
-    );
-  }
+ }
 }

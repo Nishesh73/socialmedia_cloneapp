@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 //import 'package:flutter/src/widgets/container.dart';
 //import 'package:flutter/src/widgets/framework.dart';
@@ -26,23 +25,13 @@ class _RegisTrationState extends State<RegisTration> {
           await appprovider.signInwithGoogle();
 
           Navigator.push(context, MaterialPageRoute(builder: (context)=>MyHome()));
-
-
-
-        },
+ },
 
         child: Text("sign in with google") ,
         color: Colors.red,
-        
-        
-        
-        
+         
         ),
       )
-
-
-
-
-    );
+ );
   }
 }

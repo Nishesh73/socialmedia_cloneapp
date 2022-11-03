@@ -1,6 +1,4 @@
-
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +26,6 @@ class _DetailScreenState extends State<DetailScreen> {
     final approvider=Provider.of<AppProvider>(context);
     String? descript;
     return Scaffold(
-
-
       body: Container(
         margin: EdgeInsets.only(top: 100),
         child: Column(
@@ -48,21 +44,10 @@ class _DetailScreenState extends State<DetailScreen> {
                       descript=value;
                       
                     });
-
-                    
-                    
-                  }),
-
-
-
-                )),
-
-                
-
-
-
-              ],),
-            ),
+}),
+)),
+  ],),
+),
              MaterialButton(onPressed: (){
 
                ImagePicker().pickVideo(source: ImageSource.gallery).then((imagetaken) {
@@ -89,25 +74,21 @@ class _DetailScreenState extends State<DetailScreen> {
          uploadimage.whenComplete(() {
 
           reference.getDownloadURL().then((imageurl) {
-
-
-            FirebaseFirestore.instance.collection("posts").doc(descript).set({
+          FirebaseFirestore.instance.collection("posts").doc(descript).set({
               "imageurls":imageurl,
               "type":"video",
               "description":descript,
               "name":approvider.user,
-
-
-            });
+              "comments":[],
+              "likes":0,
+               });
           });
-          //Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
 
          }
           );
           }
-
-  
-             },
+},
               child: Text("upload video"),
               color: Colors.red,
               
@@ -137,51 +118,28 @@ class _DetailScreenState extends State<DetailScreen> {
          uploadimage.whenComplete(() {
 
           reference.getDownloadURL().then((imageurl) {
-
-
-            FirebaseFirestore.instance.collection("posts").doc(descript).set({
+          FirebaseFirestore.instance.collection("posts").doc(descript).set({
               "imageurls":imageurl,
               "type":"image",
               "description":descript,
               "name":approvider.user,
-
-
-            });
+              "comments":[],
+              "likes":0,
+                  });
           });
 
-          
-
-          //Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
-
-
-         } 
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
+    } 
          );
-         
-
-
-         }
-
-
-
-
-
-
-
-               },
+               }
+  },
               child: Text("upload image"),
               color: Colors.red,
               
               )
-
-            
-
-
-
           ],
         ),
       ),
-
-
 
     );
   }

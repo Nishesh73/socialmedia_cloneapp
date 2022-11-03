@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_app/provides/appprovide.dart';
@@ -17,31 +16,21 @@ class _MyFriendListState extends State<MyFriendList> {
   Widget build(BuildContext context) {
     final approvider=Provider.of<AppProvider>(context);
     return Scaffold(
-
-
-      body:Container(
+     body:Container(
         
         child:StreamBuilder(
           stream:FirebaseFirestore.instance.collection("users").where("name",isEqualTo:approvider.user ).snapshots()
-        
-        ,
+             ,
         
         builder:
         (context, snapshot) {
 
           return ListView(
 
-            
-
-            
-
             children: snapshot.data!.docs.map((DocumentSnapshot documentSnapshot){
 
               List data=documentSnapshot.get("Friends");
-
-
-
-              return Column(
+             return Column(
 
                 children: data.map((e) {
 
@@ -57,35 +46,18 @@ class _MyFriendListState extends State<MyFriendList> {
                     
                     ,child: Text("chat with"+"   "+e));
 
-
-
-                } ).toList(),
-
-
+} ).toList(),
 
               );
-
-
-
-
-
-
-            } ).toList(),
-              
-
-            
-
-          );
+    } ).toList(),
+                );
           
         })
         
         
          ) ,
          
-         
-
-
-    );
+         );
   }
 }
 
