@@ -3,6 +3,7 @@ import 'package:instagram_clone_app/provides/appprovide.dart';
 import 'package:instagram_clone_app/screens/detailscreen.dart';
 import 'package:instagram_clone_app/screens/friendlistscreen.dart';
 import 'package:instagram_clone_app/widget/postwidget.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,10 +29,11 @@ class _MyFeedsState extends State<MyFeeds> {
     final approvider=Provider.of<AppProvider>(context);
     return Scaffold(
 
-      appBar: AppBar(
+      appBar: NewGradientAppBar(
+        automaticallyImplyLeading: false,
         
         title: Text("feed"),
-        backgroundColor: Colors.red,
+       gradient: LinearGradient(colors: [Colors.amber,Colors.amberAccent,Colors.yellow]),
         actions: [
 
           IconButton(onPressed: (){

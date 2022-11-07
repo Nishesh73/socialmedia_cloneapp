@@ -19,6 +19,7 @@ class _RegisTrationState extends State<RegisTration> {
   Widget build(BuildContext context) {
     final appprovider=Provider.of<AppProvider>(context);
     return Scaffold(
+      backgroundColor:Colors.amber,
 
       body: Center(
         child: MaterialButton(onPressed: ()async {
@@ -29,6 +30,9 @@ class _RegisTrationState extends State<RegisTration> {
 
         child: Text("sign in with google") ,
         color: Colors.red,
+        elevation: 20.0,
+        shape: Border.all(width: 5.0,color: Colors.blue),
+        hoverColor: Colors.pink,
          
         ),
       )

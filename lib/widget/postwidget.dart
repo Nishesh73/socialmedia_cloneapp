@@ -21,7 +21,8 @@ class PostWidget extends StatefulWidget {
 
 class _PostWidgetState extends State<PostWidget> {
   VideoPlayerController? videoPlayerController;
-
+ DocumentSnapshot? documentSnapshot;
+  
   List? temporaryfriendList=[];
 
   videoPlay(){
@@ -99,7 +100,41 @@ class _PostWidgetState extends State<PostWidget> {
      ),
 
    Row(children: [
-    IconButton(onPressed: (){}, icon: Icon(MdiIcons.heart)),
+
+    Column(
+      children: [
+        IconButton(onPressed: (){
+
+          StreamBuilder(stream:FirebaseFirestore.instance.collection("posts").snapshots(), 
+          builder:(context,snapshots){
+            return ListView.builder(
+              itemCount: snapshots.data!.docs.length,
+              itemBuilder: (context,index){
+                DocumentSnapshot documentSnapshot=snapshots.data!.docs[index];
+
+                return Column(
+                  children: [
+                   
+                   Text(documentSnapshot["likes"]),
+                  ],
+
+                );
+              });
+
+
+          } ,);
+          
+
+
+        }, 
+        icon: Icon(MdiIcons.heart)),
+
+        
+
+        
+      ],
+    ),
+    SizedBox(width: 10.0,),
     IconButton(onPressed: (){
 
       Navigator.push(context,MaterialPageRoute(builder: (context)=>MyComment(comments:widget.postModel.comments,descriptions: widget.postModel.description,)) );

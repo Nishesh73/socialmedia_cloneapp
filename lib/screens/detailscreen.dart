@@ -19,13 +19,17 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   File? pickimage;
+  String? descript;
   var uids=Uuid();
 
   @override
   Widget build(BuildContext context) {
     final approvider=Provider.of<AppProvider>(context);
-    String? descript;
+    
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.redAccent,
+      ),
       body: Container(
         margin: EdgeInsets.only(top: 100),
         child: Column(
@@ -48,7 +52,10 @@ class _DetailScreenState extends State<DetailScreen> {
 )),
   ],),
 ),
-             MaterialButton(onPressed: (){
+             MaterialButton(
+              elevation: 10,
+              
+              onPressed: (){
 
                ImagePicker().pickVideo(source: ImageSource.gallery).then((imagetaken) {
 
@@ -83,18 +90,21 @@ class _DetailScreenState extends State<DetailScreen> {
               "likes":0,
                });
           });
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
+        //  Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
 
          }
           );
           }
 },
               child: Text("upload video"),
-              color: Colors.red,
+              color: Colors.yellow,
+              shape:Border.all(width: 2.0,color: Colors.black) ,
               
               ),
 
-               MaterialButton(onPressed: (){
+               MaterialButton(
+                elevation: 10,
+                onPressed: (){
                  ImagePicker().pickImage(source: ImageSource.gallery).then((imagetaken) {
 
         var tempfile=File(imagetaken!.path);
@@ -128,7 +138,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   });
           });
 
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
+         // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
     } 
          );
                }

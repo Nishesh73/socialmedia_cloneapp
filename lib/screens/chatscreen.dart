@@ -39,7 +39,9 @@ class _ChatScreenState extends State<ChatScreen> {
    final appprovider=Provider.of<AppProvider>(context);
     return Scaffold(
 
-      appBar: AppBar(title: Text("chat screen"),),
+      appBar: AppBar(
+        title: Text("chat screen"),
+        backgroundColor: Colors.amber,),
 
       body: SingleChildScrollView(
         child: Column(
@@ -70,7 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
               );
               }),
             Container(
-              margin: EdgeInsets.only(top: 200.0),
+              margin: EdgeInsets.only(top: 500.0),
               child: Form(
                 key: globalkey,
                 child: Row(children: [

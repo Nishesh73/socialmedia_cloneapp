@@ -30,9 +30,40 @@ class _MyProfileState extends State<MyProfile> {
 
                     return Column(
                       children: [
-                        Text(result["name"]),
-                        Text(result["email"]),
-                        Container()
+                        Row(children: [
+                         
+
+                          //circleavatar
+
+                          Text(result["name"]),
+
+
+                        ],),
+
+                        SizedBox(height: 10.0,),
+                        
+                        
+                        Container(
+                          height: 200.0,
+
+                          child: StreamBuilder(stream:FirebaseFirestore.instance.collection("posts").where("name",isEqualTo: widget.name).snapshots(),
+                          builder:(context,snapshots){
+
+
+                            return GridView(
+                              gridDelegate: 
+                              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,crossAxisSpacing: 20.0),
+                              children: snapshots.data!.docs.map((result){
+                                return Image.network(result["imageurls"]);
+                              }).toList(),
+                            
+                            
+                            );
+
+                          } ),
+
+
+                        )
                       ],
                     );
 

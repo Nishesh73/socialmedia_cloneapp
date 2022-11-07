@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_app/provides/appprovide.dart';
 import 'package:instagram_clone_app/screens/chatscreen.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class MyFriendList extends StatefulWidget {
@@ -16,6 +17,14 @@ class _MyFriendListState extends State<MyFriendList> {
   Widget build(BuildContext context) {
     final approvider=Provider.of<AppProvider>(context);
     return Scaffold(
+      appBar: NewGradientAppBar(
+        title: Text("friendlist"),
+        gradient: LinearGradient(colors: [
+          Colors.red,
+          Colors.white,
+          Colors.black,
+        ]),
+      ),
      body:Container(
         
         child:StreamBuilder(
@@ -44,7 +53,9 @@ class _MyFriendListState extends State<MyFriendList> {
 
                     }
                     
-                    ,child: Text("chat with"+"   "+e));
+                    ,child: Container(
+                      margin: EdgeInsets.only(top: 30.0),
+                      child: Text("chat with"+"   "+e)));
 
 } ).toList(),
 
