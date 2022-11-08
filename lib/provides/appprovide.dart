@@ -5,55 +5,47 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:instagram_clone_app/models/postmodel.dart';
 import 'package:instagram_clone_app/services/firebaseservice.dart';
 
-class AppProvider with ChangeNotifier{
-
+class AppProvider with ChangeNotifier {
   String? user;
 
-  List<PostModel> posts=[];
+  List<PostModel> posts = [];
 
-  FirebaseService firebaseService=FirebaseService();
+  FirebaseService firebaseService = FirebaseService();
 
-  AppProvider(){
-
+  AppProvider() {
     gettPosts();
-
-
   }
 
- Future signInwithGoogle() async{
+  Future signInwithGoogle() async {
+    GoogleSignInAccount? googleSignInAccount = await GoogleSignIn().signIn();
 
-    GoogleSignInAccount? googleSignInAccount=await GoogleSignIn().signIn();
-    
-    GoogleSignInAuthentication googleSignInAuthentication=await googleSignInAccount!.authentication;
-    
-    
-    final googlecredential=GoogleAuthProvider.credential(accessToken:googleSignInAuthentication.accessToken ,
-    
-    idToken:googleSignInAuthentication.idToken );
+    GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
 
-    return FirebaseAuth.instance.signInWithCredential(googlecredential).then((value){
+    final googlecredential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken);
 
-      user=value.user!.displayName;
+    return FirebaseAuth.instance
+        .signInWithCredential(googlecredential)
+        .then((value) {
+      user = value.user!.displayName;
 
-      FirebaseFirestore.instance.collection("users").doc(value.user!.displayName).set({
-
-        "id":value.user!.uid,
-        "name":value.user!.displayName,
-        "email":value.user!.email
-        
- },
-
- SetOptions(merge: true),
- 
- );
-
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(value.user!.displayName)
+          .set(
+        {
+          "id": value.user!.uid,
+          "name": value.user!.displayName,
+          "email": value.user!.email
+        },
+        SetOptions(merge: true),
+      );
     });
-
   }
 
-  gettPosts() async{
-    posts=await firebaseService.getPost();
-
-
+  gettPosts() async {
+    posts = await firebaseService.getPost();
   }
 }

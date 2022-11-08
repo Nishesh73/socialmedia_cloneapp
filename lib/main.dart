@@ -9,17 +9,16 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
-  runApp(                         
-
-    MultiProvider(providers: [
-      ChangeNotifierProvider.value(value: AppProvider()),
-  ],
-
-    child: MyApp(),
-   ),   
-    );
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: AppProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -33,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     home: RegisTration(),
+      home: RegisTration(),
     );
   }
 }

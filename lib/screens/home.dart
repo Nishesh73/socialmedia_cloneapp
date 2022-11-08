@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:instagram_clone_app/provides/appprovide.dart';
@@ -16,58 +16,54 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
-  int _currentindex=0;
-  PageController pageController=PageController();
+  int _currentindex = 0;
+  PageController pageController = PageController();
 
-
-  onPageChange(index){
-
+  onPageChange(index) {
     setState(() {
-       pageController.animateToPage(index, duration: Duration(microseconds: 10), curve: Curves.bounceOut);
+      pageController.animateToPage(index,
+          duration: Duration(microseconds: 10), curve: Curves.bounceOut);
+    });
+  }
 
-      });
- }
   @override
   Widget build(BuildContext context) {
-    final appProvider=Provider.of<AppProvider>(context);
+    final appProvider = Provider.of<AppProvider>(context);
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.black,
-        backgroundColor: Colors.white,
-        currentIndex:_currentindex ,
-      onTap:(index){
-          setState(() {
-           onPageChange(index);
-           });
- } ,
-         items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home),label: "home"),
-        BottomNavigationBarItem(icon: Icon(Icons.search),label: "search"),
-        BottomNavigationBarItem(icon: Icon(Icons.notifications),label: "notification"),
-        BottomNavigationBarItem(icon: Icon(Icons.account_box),label:"account" ),
- ]),
+          selectedItemColor: Colors.red,
+          unselectedItemColor: Colors.black,
+          backgroundColor: Colors.white,
+          currentIndex: _currentindex,
+          onTap: (index) {
+            setState(() {
+              onPageChange(index);
+            });
+          },
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: "search"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.notifications), label: "notification"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_box), label: "account"),
+          ]),
       body: PageView(
         controller: pageController,
-        onPageChanged: (index){
-
+        onPageChanged: (index) {
           setState(() {
-             _currentindex=index;
-            
+            _currentindex = index;
           });
-          },
-
+        },
         children: [
           MyFeeds(),
           MySearch(),
           MyNotification(),
-          MyProfile(name:appProvider.user ,),
-           ],
-
- ),
-
-
+          MyProfile(
+            name: appProvider.user,
+          ),
+        ],
+      ),
     );
   }
 }

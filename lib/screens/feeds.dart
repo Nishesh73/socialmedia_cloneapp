@@ -13,7 +13,6 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class MyFeeds extends StatefulWidget {
   const MyFeeds({super.key});
 
@@ -23,59 +22,44 @@ class MyFeeds extends StatefulWidget {
 
 class _MyFeedsState extends State<MyFeeds> {
   File? pickimage;
-  var uids=Uuid();
+  var uids = Uuid();
   @override
   Widget build(BuildContext context) {
-    final approvider=Provider.of<AppProvider>(context);
+    final approvider = Provider.of<AppProvider>(context);
     return Scaffold(
-
       appBar: NewGradientAppBar(
         automaticallyImplyLeading: false,
-        
         title: Text("feed"),
-       gradient: LinearGradient(colors: [Colors.amber,Colors.amberAccent,Colors.yellow]),
+        gradient: LinearGradient(
+            colors: [Colors.amber, Colors.amberAccent, Colors.yellow]),
         actions: [
-
-          IconButton(onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context){
-
-              return DetailScreen();
-
-
-            }));
-
-
-          }, icon: Icon(Icons.add)),
-          IconButton(onPressed: (){
-
-            Navigator.push(context, MaterialPageRoute(builder: (context){
-              return MyFriendList();
-
-
-            }) );
-
-          }, icon: Icon(Icons.message)),
-
-     ],
-
-           ),
-
-      body: SingleChildScrollView(child: Column(
-
-        children: [
-
-          Text("hi"),
-
-          Column(children: 
-
-            approvider.posts.map((results) => PostWidget(postModel: results)).toList(),
-          
- )
-      ],
-    )
+          IconButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return DetailScreen();
+                }));
+              },
+              icon: Icon(Icons.add)),
+          IconButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return MyFriendList();
+                }));
+              },
+              icon: Icon(Icons.message)),
+        ],
       ),
-
-
+      body: SingleChildScrollView(
+          child: Column(
+        children: [
+          Text("hi"),
+          Column(
+            children: approvider.posts
+                .map((results) => PostWidget(postModel: results))
+                .toList(),
+          )
+        ],
+      )),
     );
   }
 }

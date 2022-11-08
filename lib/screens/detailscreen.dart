@@ -20,12 +20,12 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   File? pickimage;
   String? descript;
-  var uids=Uuid();
+  var uids = Uuid();
 
   @override
   Widget build(BuildContext context) {
-    final approvider=Provider.of<AppProvider>(context);
-    
+    final approvider = Provider.of<AppProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
@@ -34,123 +34,112 @@ class _DetailScreenState extends State<DetailScreen> {
         margin: EdgeInsets.only(top: 100),
         child: Column(
           children: [
-
             Container(
-
               width: MediaQuery.of(context).size.width,
-              child: Row(children: [
-
-                Expanded(child: TextFormField(
-
-                  onChanged: ((value) {
-
-                    setState(() {
-                      descript=value;
-                      
-                    });
-}),
-)),
-  ],),
-),
-             MaterialButton(
+              child: Row(
+                children: [
+                  Expanded(child: TextFormField(
+                    onChanged: ((value) {
+                      setState(() {
+                        descript = value;
+                      });
+                    }),
+                  )),
+                ],
+              ),
+            ),
+            MaterialButton(
               elevation: 10,
-              
-              onPressed: (){
+              onPressed: () {
+                ImagePicker()
+                    .pickVideo(source: ImageSource.gallery)
+                    .then((imagetaken) {
+                  var tempfile = File(imagetaken!.path);
 
-               ImagePicker().pickVideo(source: ImageSource.gallery).then((imagetaken) {
+                  if (tempfile != null) {
+                    setState(() {
+                      pickimage = tempfile;
+                    });
+                  }
+                });
 
-        var tempfile=File(imagetaken!.path);
+                Reference reference = FirebaseStorage.instance
+                    .ref()
+                    .child("postsfolder")
+                    .child(uids.v4().toString());
 
-        if(tempfile!=null){
+                if (pickimage != null) {
+                  UploadTask uploadimage = reference.putFile(pickimage!);
 
-          setState(() {
-
-            pickimage=tempfile;
-            
-          });
-
-         }
- } );
-
-         Reference reference=FirebaseStorage.instance.ref().child("postsfolder").child(uids.v4().toString());
-
-        if(pickimage!=null){
-
-         UploadTask uploadimage=reference.putFile(pickimage!);
-
-         uploadimage.whenComplete(() {
-
-          reference.getDownloadURL().then((imageurl) {
-          FirebaseFirestore.instance.collection("posts").doc(descript).set({
-              "imageurls":imageurl,
-              "type":"video",
-              "description":descript,
-              "name":approvider.user,
-              "comments":[],
-              "likes":0,
-               });
-          });
-        //  Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
-
-         }
-          );
-          }
-},
+                  uploadimage.whenComplete(() {
+                    reference.getDownloadURL().then((imageurl) {
+                      FirebaseFirestore.instance
+                          .collection("posts")
+                          .doc(descript)
+                          .set({
+                        "imageurls": imageurl,
+                        "type": "video",
+                        "description": descript,
+                        "name": approvider.user,
+                        "comments": [],
+                        "likes": 0,
+                      });
+                    });
+                    //  Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
+                  });
+                }
+              },
               child: Text("upload video"),
               color: Colors.yellow,
-              shape:Border.all(width: 2.0,color: Colors.black) ,
-              
-              ),
+              shape: Border.all(width: 2.0, color: Colors.black),
+            ),
+            MaterialButton(
+              elevation: 10,
+              onPressed: () {
+                ImagePicker()
+                    .pickImage(source: ImageSource.gallery)
+                    .then((imagetaken) {
+                  var tempfile = File(imagetaken!.path);
 
-               MaterialButton(
-                elevation: 10,
-                onPressed: (){
-                 ImagePicker().pickImage(source: ImageSource.gallery).then((imagetaken) {
+                  if (tempfile != null) {
+                    setState(() {
+                      pickimage = tempfile;
+                    });
+                  }
+                });
 
-        var tempfile=File(imagetaken!.path);
+                Reference reference = FirebaseStorage.instance
+                    .ref()
+                    .child("postsfolder")
+                    .child(uids.v4().toString());
+                if (pickimage != null) {
+                  UploadTask uploadimage = reference.putFile(pickimage!);
 
-        if(tempfile!=null){
+                  uploadimage.whenComplete(() {
+                    reference.getDownloadURL().then((imageurl) {
+                      FirebaseFirestore.instance
+                          .collection("posts")
+                          .doc(descript)
+                          .set({
+                        "imageurls": imageurl,
+                        "type": "image",
+                        "description": descript,
+                        "name": approvider.user,
+                        "comments": [],
+                        "likes": 0,
+                      });
+                    });
 
-          setState(() {
-
-            pickimage=tempfile;
-            
-          });
-
-         }
- } );
-
-         Reference reference=FirebaseStorage.instance.ref().child("postsfolder").child(uids.v4().toString());
-         if(pickimage!=null){
-
-         UploadTask uploadimage=reference.putFile(pickimage!);
-
-         uploadimage.whenComplete(() {
-
-          reference.getDownloadURL().then((imageurl) {
-          FirebaseFirestore.instance.collection("posts").doc(descript).set({
-              "imageurls":imageurl,
-              "type":"image",
-              "description":descript,
-              "name":approvider.user,
-              "comments":[],
-              "likes":0,
+                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
                   });
-          });
-
-         // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyFeeds()));
-    } 
-         );
-               }
-  },
+                }
+              },
               child: Text("upload image"),
               color: Colors.red,
-              
-              )
+            )
           ],
         ),
       ),
-
     );
   }
 }
