@@ -58,7 +58,7 @@ class _MyHomeState extends State<MyHome> {
         children: [
           MyFeeds(),
           MySearch(),
-          MyNotification(),
+          MyNotification(nameuser: appProvider.user,),
           MyProfile(
             name: appProvider.user,
           ),

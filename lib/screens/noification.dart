@@ -7,13 +7,28 @@ import 'package:instagram_clone_app/provides/appprovide.dart';
 import 'package:provider/provider.dart';
 
 class MyNotification extends StatefulWidget {
-  const MyNotification({super.key});
+  String? nameuser;
+   MyNotification({super.key,this.nameuser});
 
   @override
   State<MyNotification> createState() => _MyNotificationState();
 }
 
 class _MyNotificationState extends State<MyNotification> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    FirebaseFirestore.instance.collection("temporaryfriendlist").doc(widget.nameuser).set({
+      "name":widget.nameuser,
+    },
+    SetOptions(merge: true),
+    );
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     final approvider = Provider.of<AppProvider>(context);
@@ -21,6 +36,8 @@ class _MyNotificationState extends State<MyNotification> {
       body: SingleChildScrollView(
           child: Column(
         children: [
+          
+          
           StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection("temporaryfriendlist")
@@ -34,76 +51,86 @@ class _MyNotificationState extends State<MyNotification> {
                     children:
                         streamdata.data!.docs.map((DocumentSnapshot snapshot) {
                       List listdata = snapshot.get("friends");
+                      if (listdata.isEmpty) {
+                        return Center(
+                            child: Container(
+                              margin: EdgeInsets.only(top: 200.0),
+                              
+                              child: Text("No Notification",style: TextStyle(fontSize: 30.0,fontWeight: FontWeight.bold),)));
+                      } else {
+                        return Container(
+                          height: 300,
+                          width: 200,
+                          child: ListView.builder(
+                              itemCount: listdata.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: Text(
+                                      listdata[index] + "\nsend fnd reqst"),
+                                  trailing: Container(
+                                    width: 250,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 60.0,
+                                        ),
+                                        Expanded(
+                                          child: MaterialButton(
+                                            onPressed: () {
+                                              FirebaseFirestore.instance
+                                                  .collection("users")
+                                                  .doc(approvider.user)
+                                                  .set(
+                                                {
+                                                  "Friends":
+                                                      FieldValue.arrayUnion(
+                                                          [listdata[index]]),
+                                                },
+                                                SetOptions(merge: true),
+                                              );
 
-                      return Container(
-                        height: 300,
-                        width: 200,
-                        child: ListView.builder(
-                            itemCount: listdata.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                leading:
-                                    Text(listdata[index] + "\nsend fnd reqst"),
-                                trailing: Container(
-                                  width: 250,
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 60.0,
-                                      ),
-                                      Expanded(
-                                        child: MaterialButton(
-                                          onPressed: () {
-                                            FirebaseFirestore.instance
-                                                .collection("users")
-                                                .doc(approvider.user)
-                                                .set(
-                                              {
-                                                "Friends":
-                                                    FieldValue.arrayUnion(
+                                              FirebaseFirestore.instance
+                                                  .collection("users")
+                                                  .doc(listdata[index])
+                                                  .set(
+                                                {
+                                                  "Friends":
+                                                      FieldValue.arrayUnion(
+                                                          [approvider.user]),
+
+                                                },
+                                                SetOptions(merge: true),
+                                              );
+
+                                              FirebaseFirestore.instance
+                                                  .collection(
+                                                      "temporaryfriendlist")
+                                                  .doc(approvider.user)
+                                                  .update({
+                                                "friends":
+                                                    FieldValue.arrayRemove(
                                                         [listdata[index]]),
-                                              },
-                                              SetOptions(merge: true),
-                                            );
-
-                                            FirebaseFirestore.instance
-                                                .collection("users")
-                                                .doc(listdata[index])
-                                                .set(
-                                              {
-                                                "Friends":
-                                                    FieldValue.arrayUnion(
-                                                        [approvider.user]),
-                                              },
-                                              SetOptions(merge: true),
-                                            );
-
-                                            FirebaseFirestore.instance
-                                                .collection(
-                                                    "temporaryfriendlist")
-                                                .doc(approvider.user)
-                                                .update({
-                                              "friends": FieldValue.arrayRemove(
-                                                  [listdata[index]]),
-                                            });
-                                          },
-                                          child: Text("confirm"),
-                                          color: Colors.red,
+                                                       
+                                              });
+                                            },
+                                            child: Text("confirm"),
+                                            color: Colors.red,
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: MaterialButton(
-                                          onPressed: () {},
-                                          child: Text("reject"),
-                                          color: Colors.blue,
-                                        ),
-                                      )
-                                    ],
+                                        Expanded(
+                                          child: MaterialButton(
+                                            onPressed: () {},
+                                            child: Text("reject"),
+                                            color: Colors.blue,
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            }),
-                      );
+                                );
+                              }),
+                        );
+                      }
                     }).toList(),
                   ),
                 );

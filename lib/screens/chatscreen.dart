@@ -15,6 +15,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final globalkey = GlobalKey<FormState>();
   String? message;
   String? id;
+  TextEditingController textEditingController=TextEditingController();
 
   createId() {
     if (widget.currentuser.hashCode <= widget.peeruser.hashCode) {
@@ -83,8 +84,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Row(
                   children: [
                     Expanded(child: TextFormField(
+                      controller: textEditingController,
                       onSaved: (value) {
                         message = value;
+                        textEditingController.clear();
                       },
                     )),
                     IconButton(

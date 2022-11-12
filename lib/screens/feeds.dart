@@ -52,7 +52,7 @@ class _MyFeedsState extends State<MyFeeds> {
       body: SingleChildScrollView(
           child: Column(
         children: [
-          Text("hi"),
+         
           Column(
             children: approvider.posts
                 .map((results) => PostWidget(postModel: results))

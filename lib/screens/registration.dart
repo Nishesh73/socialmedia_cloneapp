@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone_app/provides/appprovide.dart';
 import 'package:instagram_clone_app/screens/home.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class RegisTration extends StatefulWidget {
   const RegisTration({super.key});
@@ -13,24 +14,38 @@ class RegisTration extends StatefulWidget {
 }
 
 class _RegisTrationState extends State<RegisTration> {
+  bool isLoading=false;
   @override
   Widget build(BuildContext context) {
     final appprovider = Provider.of<AppProvider>(context);
     return Scaffold(
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.white70.withOpacity(0.2),
         body: Center(
-          child: MaterialButton(
-            onPressed: () async {
-              await appprovider.signInwithGoogle();
+          child:isLoading?CircularProgressIndicator(): Container(
+            height: 50.0,
+            child: SignInButton(
+              Buttons.GoogleDark,
+              onPressed: () async {
 
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => MyHome()));
-            },
-            child: Text("sign in with google"),
-            color: Colors.red,
-            elevation: 20.0,
-            shape: Border.all(width: 5.0, color: Colors.blue),
-            hoverColor: Colors.pink,
+                setState(() {
+                  isLoading=true;
+                  
+                });
+                 
+                await appprovider.signInwithGoogle();
+                setState(() {
+                  isLoading=false;
+                });
+               
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => MyHome()),
+                    
+                    
+                    );
+              },
+              
+              
+            ),
           ),
         ));
   }

@@ -1,3 +1,5 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class PostWidget extends StatefulWidget {
 
 class _PostWidgetState extends State<PostWidget> {
   VideoPlayerController? videoPlayerController;
-  DocumentSnapshot? documentSnapshot;
+ DocumentSnapshot? documentSnapshot;
 
   List? temporaryfriendList = [];
 
@@ -71,18 +73,20 @@ class _PostWidgetState extends State<PostWidget> {
                         "friends": FieldValue.arrayUnion(temporaryfriendList!),
                       });
                     },
-                    child: Text("add friend")),
+                    child: Icon(Icons.add)),
           ),
           widget.postModel.type == "image"
               ? GestureDetector(
                   onDoubleTap: (() {
-                    int like = widget.postModel.likes;
+                    int like = widget.postModel.likes;//ahilesamma ko like
                     FirebaseFirestore.instance
                         .collection("posts")
                         .doc(widget.postModel.description)
                         .update({
+                          
                       "likes": like += 1,
                     });
+                    
                   }),
                   child: Image.network(widget.postModel.url))
               : Container(
@@ -96,26 +100,43 @@ class _PostWidgetState extends State<PostWidget> {
               Column(
                 children: [
                   IconButton(
+                    hoverColor: Colors.white,
                       onPressed: () {
-                        StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection("posts")
-                              .snapshots(),
-                          builder: (context, snapshots) {
-                            return ListView.builder(
-                                itemCount: snapshots.data!.docs.length,
-                                itemBuilder: (context, index) {
-                                  DocumentSnapshot documentSnapshot =
-                                      snapshots.data!.docs[index];
+                        
+                     
+                          
 
-                                  return Column(
-                                    children: [
-                                      Text(documentSnapshot["likes"]),
-                                    ],
-                                  );
-                                });
-                          },
-                        );
+                            int like=widget.postModel.likes;
+                           
+                        FirebaseFirestore.instance.collection("posts").doc(widget.postModel.description).update({
+                          "likes":like+=1,
+
+                          
+                        });
+
+                       StreamBuilder(
+                        stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+                        builder: (context,snapshots){
+
+                          return ListView.builder(
+                            itemCount: snapshots.data!.docs.length,
+                            itemBuilder: (context,indexs){
+                              Map<String, dynamic> documentSnapshot=snapshots.data!.docs[indexs].data();
+                              return Text(documentSnapshot["likes"].toString());
+
+
+
+                            });
+
+
+                        }); 
+                        
+
+                       
+                                
+                              
+                          
+                        
                       },
                       icon: Icon(MdiIcons.heart)),
                 ],
@@ -140,4 +161,6 @@ class _PostWidgetState extends State<PostWidget> {
       ),
     );
   }
+
+  
 }

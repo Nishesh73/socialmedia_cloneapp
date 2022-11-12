@@ -12,6 +12,7 @@ class MyComment extends StatefulWidget {
 }
 
 class _MyCommentState extends State<MyComment> {
+  TextEditingController _textEditingController=TextEditingController();
   final globalkey = GlobalKey<FormState>();
   List? sendcomment = [];
   String? comment;
@@ -38,8 +39,13 @@ class _MyCommentState extends State<MyComment> {
                 child: Container(
                   width: 200.0,
                   child: TextFormField(
+                    controller:_textEditingController ,
+
+                   
+                    
                     onSaved: (value) {
                       comment = value;
+                      _textEditingController.clear();
                     },
                   ),
                 ),

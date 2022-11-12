@@ -47,7 +47,8 @@ dependencies:
   uuid: ^3.0.5
   material_design_icons_flutter: ^5.0.6996
   material_floating_search_bar: ^0.3.7
-  new_gradient_app_bar: ^0.2.0 
+  new_gradient_app_bar: ^0.2.0
+  flutter_signin_button: ^2.0.0 
   
 
 dev_dependencies:
