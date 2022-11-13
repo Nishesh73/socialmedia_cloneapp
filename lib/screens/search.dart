@@ -13,58 +13,93 @@ class MySearch extends StatefulWidget {
 }
 
 class _MySearchState extends State<MySearch> {
-String? val;
+String? query;
 
- 
+
+
   
  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+
+        title: Card(
+          elevation: 10.0,
+          
+              child: 
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Expanded(
+                    
+                     
+                      child: TextField(
+                        decoration: InputDecoration(
+                          
+                          prefixIcon: Icon(Icons.search),
+                        ),
+                        onChanged: ((value) {
+
+                          
+                             
+                        
+
+
+                          
+                        }),
+                        
+
+
+                      )),
+                  ),
+
+                 
+
+                
+              ),
+
+
+ 
+        ),
+
+        body: StreamBuilder(stream: query!=null && query!=""?FirebaseFirestore.instance.collection("users").where("name",isEqualTo:query ).snapshots():
+        FirebaseFirestore.instance.collection("users").snapshots(),
+
+          
+          builder:(context, snapshots){
+
+            return snapshots.connectionState==ConnectionState.waiting?Center(child: CircularProgressIndicator()):
+
+            ListView.builder
+            (itemCount: snapshots.data!.docs.length,
+              itemBuilder: (context,index){
+                var document=snapshots.data!.docs[index];
+
+                return Container(
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(document["name"]),
+
+                      ),
+                     //continer
+                    ],
+                  ),
+                );
+
+
+              });
+
+            
+          } ),
 
         
-      ),
-        body:Card(
-          elevation: 20.0,
-
-          child: Row(
-
-            children: [
-              Expanded(
-              
-               
-                child: TextField(
-                  decoration: InputDecoration(
-                    
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                  onChanged: ((value) {
-
-                    setState(() {
-                        val=value;
-                    });
-                  
-
-
-                    
-                  }),
-                  
-
-
-                )),
-
-             
-
-            ],
-          ),
-
-
-        )
-
+      );
+      
 
       
-    );
+    
   }
 
 }
